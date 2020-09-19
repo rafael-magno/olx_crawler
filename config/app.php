@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'cache_time' => env('CACHE_HOURS', 1) * 3600,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

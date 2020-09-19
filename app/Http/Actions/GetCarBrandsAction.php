@@ -2,20 +2,13 @@
 
 namespace App\Http\Actions;
 
-use App\Services\GetCarBrandsService;
+use App\Repositories\CarBrandRepository;
 use Illuminate\Routing\Controller;
 
 class GetCarBrandsAction extends Controller
 {
-    private GetCarBrandsService $getCarBrandsService;
-
-    public function __construct(GetCarBrandsService $getCarBrandsService)
+    public function __invoke(CarBrandRepository $repository): array
     {
-        $this->getCarBrandsService = $getCarBrandsService;
-    }
-
-    public function __invoke(): array
-    {
-        return $this->getCarBrandsService->handle();
+        return $repository->findAll();
     }
 }
