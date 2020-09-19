@@ -6,24 +6,24 @@ use App\Utils\MagicGet;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
-class CarBrand implements JsonSerializable
+class MarcaCarro implements JsonSerializable
 {
     use MagicGet;
 
     private string $id;
-    private string $name;
+    private string $nome;
 
-    public function __construct(string $name)
+    public function __construct(string $nome)
     {
-        $this->id = Str::slug($name);
-        $this->name = $name;
+        $this->id = Str::slug($nome);
+        $this->nome = $nome;
     }
 
     public function jsonSerialize()
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'nome' => $this->nome,
         ];
     }
 }
