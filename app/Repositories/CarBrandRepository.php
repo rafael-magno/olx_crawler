@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Entities\CarBrand;
 use App\Services\OlxCarsCrawlerService;
-use Illuminate\Support\Facades\Cache;
+use App\Utils\Cache;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CarBrandRepository
@@ -20,22 +20,31 @@ class CarBrandRepository
 
     public function findAll(): array
     {
-        $brands = Cache::get(self::CACHE_KEY);
+        $carBrands = Cache::get(self::CACHE_KEY);
 
-        if (is_null($brands)) {
+        if (is_null($carBrands)) {
             $oxlCrawler = $this->olxCarsCrawlerService->getByUri();
 
             $selects = $oxlCrawler->filter('select');
             $selectBrands = $selects->reduce(fn (Crawler $node) => $this->isBrandSelect($node));
             $selectBrands = $selectBrands->first();
 
-            $brands = $selectBrands->children()->each(fn (Crawler $node) => new CarBrand($node->text()));
-            array_shift($brands);
+            $carBrands = $selectBrands->children()->each(fn (Crawler $node) => new CarBrand($node->text()));
+            array_shift($carBrands);
 
-            Cache::put(self::CACHE_KEY, $brands, config('cache_time'));
+            Cache::put(self::CACHE_KEY, $carBrands);
         }
 
-        return $brands;
+        return $carBrands;
+    }
+
+    public function exists(string $carBrandId): bool
+    {
+        $carBrands = $this->findAll();
+
+        $carBrand = array_filter($carBrands, fn ($carBrand) => $carBrand->id == $carBrandId);
+
+        return !empty($carBrand);
     }
 
     private function isBrandSelect(Crawler $node): bool

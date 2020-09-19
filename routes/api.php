@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Actions\GetCarBrandsAction;
-use Illuminate\Http\Request;
+use App\Http\Actions\GetCarModelsAction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/car-brand', GetCarBrandsAction::class);
+Route::get('/car-model/{brand}', GetCarModelsAction::class);
