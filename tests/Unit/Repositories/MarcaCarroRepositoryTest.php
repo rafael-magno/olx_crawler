@@ -18,14 +18,19 @@ class MarcaCarroRepositoryTest extends TestCase
 {
     public function testBuscarTodas()
     {
-        $mockMarcas = ['Fiat', 'Citroen'];
+        $esperado = self::getRetornoEsperado(['Fiat', 'Citroen']);
         $mockResponseBody = "
             <html>
                 <body>
                     <select>
                         <option>Marca</option>
-                        <option>{$mockMarcas[0]}</option>
-                        <option>{$mockMarcas[1]}</option>
+        ";
+
+        foreach ($esperado as $marca) {
+            $mockResponseBody .= "<option>{$marca->nome}</option>";
+        }
+
+        $mockResponseBody .= "
                     </select>
                 </body>
             </html>
@@ -37,8 +42,6 @@ class MarcaCarroRepositoryTest extends TestCase
 
         $marcasCarro = $marcaCarroRepository->buscarTodas();
 
-        $esperado = array_map(fn ($marca) => new MarcaCarro($marca), $mockMarcas);
-
         $this->assertEquals($esperado, $marcasCarro);
         $this->assertEquals(
             Cache::get(MarcaCarroRepository::CACHE_KEY),
@@ -48,11 +51,10 @@ class MarcaCarroRepositoryTest extends TestCase
         return $marcasCarro;
     }
 
-    /**
-     * @depends testBuscarTodas
-     */
-    public function testMetodoExisteVerdadeiro(array $marcasCarro)
+    public function testMetodoExisteVerdadeiro()
     {
+        $marcasCarro = self::getRetornoEsperado(['Fiat', 'Citroen']);
+
         $marcaCarroRepository = app(MarcaCarroRepository::class);
 
         Cache::put(MarcaCarroRepository::CACHE_KEY, $marcasCarro);
@@ -65,11 +67,10 @@ class MarcaCarroRepositoryTest extends TestCase
         }
     }
 
-    /**
-     * @depends testBuscarTodas
-     */
-    public function testMetodoExisteFalso(array $marcasCarro)
+    public function testMetodoExisteFalso()
     {
+        $marcasCarro = self::getRetornoEsperado(['Fiat', 'Citroen']);
+
         $marcaCarroRepository = app(MarcaCarroRepository::class);
 
         Cache::put(MarcaCarroRepository::CACHE_KEY, $marcasCarro);
@@ -78,6 +79,11 @@ class MarcaCarroRepositoryTest extends TestCase
             false,
             $marcaCarroRepository->existe('vw')
         );
+    }
+
+    public static function getRetornoEsperado(array $marcas): array
+    {
+        return array_map(fn ($marca) => new MarcaCarro($marca), $marcas);
     }
 
     public static function getInstace(array $responseMocks)
