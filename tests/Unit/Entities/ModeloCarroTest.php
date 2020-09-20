@@ -20,14 +20,14 @@ class ModeloCarroTest extends TestCase
             'nome' => 'Uno',
         ];
 
-        $marcaCarro = new ModeloCarro($esperado['marca'], $esperado['nome']);
+        $modeloCarro = new ModeloCarro($esperado['marca'], $esperado['nome']);
 
-        $this->assertEquals($esperado['marca'], $marcaCarro->marca);
-        $this->assertEquals($esperado['id'], $marcaCarro->id);
-        $this->assertEquals($esperado['nome'], $marcaCarro->nome);
+        $this->assertEquals($esperado['marca'], $modeloCarro->marca);
+        $this->assertEquals($esperado['id'], $modeloCarro->id);
+        $this->assertEquals($esperado['nome'], $modeloCarro->nome);
         $this->assertEquals(
             json_encode($esperado),
-            json_encode($marcaCarro)
+            json_encode($modeloCarro)
         );
     }
 }
