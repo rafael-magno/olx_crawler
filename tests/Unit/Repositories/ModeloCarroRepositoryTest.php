@@ -19,14 +19,19 @@ class ModeloCarroRepositoryTest extends TestCase
     public function testBuscarPorMarca()
     {
         $mockMarca = 'fiat';
-        $mockModelos = ['147', 'Uno'];
+        $esperado = self::getRetornoEsperado($mockMarca, ['147', 'uno']);
         $mockResponseBody = "
             <html>
                 <body>
                     <select>
                         <option>Modelo</option>
-                        <option>{$mockModelos[0]}</option>
-                        <option>{$mockModelos[1]}</option>
+        ";
+
+        foreach ($esperado as $modelo) {
+            $mockResponseBody .= "<option>{$modelo->nome}</option>";
+        }
+
+        $mockResponseBody .= "
                     </select>
                 </body>
             </html>
@@ -38,29 +43,17 @@ class ModeloCarroRepositoryTest extends TestCase
 
         $modelosCarro = $modeloCarroRepository->buscarPorMarca($mockMarca);
 
-        $esperado = array_map(
-            fn ($modelo) => new ModeloCarro($mockMarca, $modelo),
-            $mockModelos
-        );
-
         $this->assertEquals($esperado, $modelosCarro);
         $this->assertEquals(
             Cache::get(ModeloCarroRepository::CACHE_KEY . $mockMarca),
             $modelosCarro
         );
-
-        return [
-            $mockMarca,
-            $modelosCarro
-        ];
     }
 
-    /**
-     * @depends testBuscarPorMarca
-     */
-    public function testMetodoExisteVerdadeiro(array $dadosTeste)
+    public function testMetodoExisteVerdadeiro()
     {
-        list($mockMarca, $modelosCarro) = $dadosTeste;
+        $mockMarca = 'fiat';
+        $modelosCarro = self::getRetornoEsperado($mockMarca, ['147', 'uno']);
 
         $modeloCarroRepository = app(ModeloCarroRepository::class);
 
@@ -74,12 +67,10 @@ class ModeloCarroRepositoryTest extends TestCase
         }
     }
 
-    /**
-     * @depends testBuscarPorMarca
-     */
-    public function testMetodoExisteFalso(array $dadosTeste)
+    public function testMetodoExisteFalso()
     {
-        list($mockMarca, $modelosCarro) = $dadosTeste;
+        $mockMarca = 'fiat';
+        $modelosCarro = self::getRetornoEsperado($mockMarca, ['147', 'uno']);
 
         $modeloCarroRepository = app(ModeloCarroRepository::class);
 
@@ -88,6 +79,14 @@ class ModeloCarroRepositoryTest extends TestCase
         $this->assertEquals(
             false,
             $modeloCarroRepository->existe($mockMarca, 'vw')
+        );
+    }
+
+    public static function getRetornoEsperado(string $marca, array $modelos)
+    {
+        return array_map(
+            fn ($modelo) => new ModeloCarro($marca, $modelo),
+            $modelos
         );
     }
 
