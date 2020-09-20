@@ -22,7 +22,7 @@ class CarroTest extends TestCase
             'combustivel' => 'Flex',
         ];
 
-        $marcaCarro = new Carro(
+        $carro = new Carro(
             $esperado['marca'],
             $esperado['modelo'],
             $esperado['quilometragem'],
@@ -30,14 +30,14 @@ class CarroTest extends TestCase
             $esperado['combustivel']
         );
 
-        $this->assertEquals($esperado['marca'], $marcaCarro->marca);
-        $this->assertEquals($esperado['modelo'], $marcaCarro->modelo);
-        $this->assertEquals($esperado['quilometragem'], $marcaCarro->quilometragem);
-        $this->assertEquals($esperado['cambio'], $marcaCarro->cambio);
-        $this->assertEquals($esperado['combustivel'], $marcaCarro->combustivel);
+        $this->assertEquals($esperado['marca'], $carro->marca);
+        $this->assertEquals($esperado['modelo'], $carro->modelo);
+        $this->assertEquals($esperado['quilometragem'], $carro->quilometragem);
+        $this->assertEquals($esperado['cambio'], $carro->cambio);
+        $this->assertEquals($esperado['combustivel'], $carro->combustivel);
         $this->assertEquals(
             json_encode($esperado),
-            json_encode($marcaCarro)
+            json_encode($carro)
         );
     }
 }
