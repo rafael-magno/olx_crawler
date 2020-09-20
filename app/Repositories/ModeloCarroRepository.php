@@ -30,13 +30,27 @@ class ModeloCarroRepository
             $selectModelos = $selects->reduce(fn (Crawler $node) => $this->selectModelo($node));
             $selectModelos = $selectModelos->first();
 
-            $modelosCarro = $selectModelos->children()->each(fn (Crawler $node) => new ModeloCarro($idMarcaCarro, $node->text()));
+            $modelosCarro = $selectModelos->children()->each(
+                fn (Crawler $node) => new ModeloCarro($idMarcaCarro, $node->text())
+            );
             array_shift($modelosCarro);
 
             Cache::put($cacheKey, $modelosCarro);
         }
 
         return $modelosCarro;
+    }
+
+    public function existe(string $idMarcaCarro, string $idModeloCarro): bool
+    {
+        $modelosCarro = $this->buscarPorMarca($idMarcaCarro);
+
+        $modeloCarro = array_filter(
+            $modelosCarro,
+            fn (ModeloCarro $modeloCarro) => $modeloCarro->id == $idModeloCarro
+        );
+
+        return !empty($modeloCarro);
     }
 
     private function selectModelo(Crawler $node): bool

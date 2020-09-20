@@ -3,22 +3,30 @@
 namespace App\Http\Actions;
 
 use App\Exceptions\HttpUnprocessableEntityException;
+use App\Repositories\AnuncioRepository;
 use App\Repositories\MarcaCarroRepository;
 use App\Repositories\ModeloCarroRepository;
 use Illuminate\Routing\Controller;
 
-class BuscaModelosCarroAction extends Controller
+class BuscaAnunciosAction extends Controller
 {
     public function __invoke(
         string $idMarcaCarro,
+        string $idModeloCarro,
+        int $pagina = 1,
+        MarcaCarroRepository $marcaCarroRepository,
         ModeloCarroRepository $modeloCarroRepository,
-        MarcaCarroRepository $marcaCarroRepository
+        AnuncioRepository $anuncioRepository
     ): array
     {
         if (!$marcaCarroRepository->existe($idMarcaCarro)) {
             throw new HttpUnprocessableEntityException('Marca de carro não encontrada.');
         }
 
-        return $modeloCarroRepository->buscarPorMarca($idMarcaCarro);
+        if (!$modeloCarroRepository->existe($idMarcaCarro, $idModeloCarro)) {
+            throw new HttpUnprocessableEntityException('Modelo de carro não encontrado.');
+        }
+
+        return $anuncioRepository->buscarPorMarcaModelo($idMarcaCarro, $idModeloCarro, $pagina);
     }
 }

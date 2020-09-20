@@ -42,7 +42,10 @@ class MarcaCarroRepository
     {
         $marcasCarro = $this->buscarTodas();
 
-        $marcaCarro = array_filter($marcasCarro, fn ($marcaCarro) => $marcaCarro->id == $idMarcaCarro);
+        $marcaCarro = array_filter(
+            $marcasCarro,
+            fn (MarcaCarro $marcaCarro) => $marcaCarro->id == $idMarcaCarro
+        );
 
         return !empty($marcaCarro);
     }

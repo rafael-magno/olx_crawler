@@ -6,6 +6,11 @@ use App\Utils\MagicGet;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
+/**
+ * @property string $marca
+ * @property string $id
+ * @property string $nome
+ */
 class ModeloCarro implements JsonSerializable
 {
     use MagicGet;
