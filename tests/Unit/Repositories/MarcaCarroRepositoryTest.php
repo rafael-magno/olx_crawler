@@ -57,14 +57,12 @@ class MarcaCarroRepositoryTest extends TestCase
 
         Cache::put(MarcaCarroRepository::CACHE_KEY, $marcasCarro);
 
-        $this->assertEquals(
-            true,
-            $marcaCarroRepository->existe('fiat')
-        );
-        $this->assertEquals(
-            true,
-            $marcaCarroRepository->existe('citroen')
-        );
+        foreach ($marcasCarro as $marcaCarro) {
+            $this->assertEquals(
+                true,
+                $marcaCarroRepository->existe($marcaCarro)
+            );
+        }
     }
 
     /**
@@ -82,7 +80,7 @@ class MarcaCarroRepositoryTest extends TestCase
         );
     }
 
-    public static function getInstace(array $responseMocks = [])
+    public static function getInstace(array $responseMocks)
     {
         $olxCarsCrawler = OlxCarsCrawlerServiceTest::getInstace($responseMocks);
 
