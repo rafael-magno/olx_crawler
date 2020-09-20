@@ -60,7 +60,7 @@ class MarcaCarroRepositoryTest extends TestCase
         foreach ($marcasCarro as $marcaCarro) {
             $this->assertEquals(
                 true,
-                $marcaCarroRepository->existe($marcaCarro)
+                $marcaCarroRepository->existe($marcaCarro->id)
             );
         }
     }
