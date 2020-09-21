@@ -10,6 +10,9 @@ use Illuminate\Routing\Controller;
 
 class BuscaAnunciosAction extends Controller
 {
+    const MARCA_CARRO_NAO_ENCONTRADA = 'Marca de carro não encontrada.';
+    const MODELO_CARRO_NAO_ENCONTRADO = 'Modelo de carro não encontrado.';
+
     public function __invoke(
         string $idMarcaCarro,
         string $idModeloCarro,
@@ -20,11 +23,11 @@ class BuscaAnunciosAction extends Controller
     ): array
     {
         if (!$marcaCarroRepository->existe($idMarcaCarro)) {
-            throw new HttpUnprocessableEntityException('Marca de carro não encontrada.');
+            throw new HttpUnprocessableEntityException(self::MARCA_CARRO_NAO_ENCONTRADA);
         }
 
         if (!$modeloCarroRepository->existe($idMarcaCarro, $idModeloCarro)) {
-            throw new HttpUnprocessableEntityException('Modelo de carro não encontrado.');
+            throw new HttpUnprocessableEntityException(self::MODELO_CARRO_NAO_ENCONTRADO);
         }
 
         return $anuncioRepository->buscarPorMarcaModelo($idMarcaCarro, $idModeloCarro, $pagina);
