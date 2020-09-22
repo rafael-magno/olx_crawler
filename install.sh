@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git submodule update --init --recursive
+
 cp -n laradock/env-example laradock/.env
 
 sed -i "s/PHP_VERSION=7.3/PHP_VERSION=7.4/g" laradock/.env
