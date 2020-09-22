@@ -49,13 +49,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "docker:build" : [
-            "@php -r \"file_exists('laradock/.env') || copy('laradock/.env.example', 'laradock/.env');\"",
-            "sed -i \"s/PHP_VERSION=7.3/PHP_VERSION=7.4/g\" laradock/.env",
-            "docker-compose -f ./laradock/docker-compose.yml --project-directory ./laradock build php-fpm",
-            "docker-compose -f ./laradock/docker-compose.yml --project-directory ./laradock down",
-            "docker-compose -f ./laradock/docker-compose.yml --project-directory ./laradock up -d nginx redis"
-        ],
         "test": "vendor/bin/phpunit --testdox",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
