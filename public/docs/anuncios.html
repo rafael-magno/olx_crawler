@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Anuncios | API Carros OLX Crawler</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    
+    <meta name="description" content="API Rest para retornar dados de carros na OLX por marca e modelo.">
+    <link rel="preload" href="/docs/assets/css/0.styles.345acc0e.css" as="style"><link rel="preload" href="/docs/assets/js/app.c11efd87.js" as="script"><link rel="preload" href="/docs/assets/js/2.c8213ec9.js" as="script"><link rel="preload" href="/docs/assets/js/6.4d99af23.js" as="script"><link rel="prefetch" href="/docs/assets/js/3.11572a76.js"><link rel="prefetch" href="/docs/assets/js/4.5ed19beb.js"><link rel="prefetch" href="/docs/assets/js/5.b5d99357.js"><link rel="prefetch" href="/docs/assets/js/7.da26cc0b.js"><link rel="prefetch" href="/docs/assets/js/8.74badcb4.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.345acc0e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">API Carros OLX Crawler</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/docs/" aria-current="page" class="sidebar-link">API Carros OLX Crawler</a></li><li><a href="/docs/marcas-carro.html" class="sidebar-link">Marcas de carro</a></li><li><a href="/docs/modelos-carro.html" class="sidebar-link">Modelos de carro</a></li><li><a href="/docs/anuncios.html" aria-current="page" class="active sidebar-link">Anuncios</a><ul class="sidebar-sub-headers"></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="anuncios"><a href="#anuncios" class="header-anchor">#</a> Anuncios</h1> <p>Listar os anuncios de acordo com o modelo e marca fornecido.</p> <h3 id="rota"><a href="#rota" class="header-anchor">#</a> Rota</h3> <div class="language- extra-class"><pre class="language-text"><code>GET /anuncio/{idMarcaCarro}/{idModeloCarro}/{pagina?}
+</code></pre></div><h3 id="parametros-da-rota"><a href="#parametros-da-rota" class="header-anchor">#</a> Parâmetros da rota</h3> <table><thead><tr><th>Parâmetro</th> <th>Descrição</th></tr></thead> <tbody><tr><td>idMarcaCarro</td> <td>Id da marca de carro retornado da rota /marca-carro (obrigatório)</td></tr> <tr><td>idModeloCarro</td> <td>Id do modelo de carro retornado da rota /modelo-carro (obrigatório)</td></tr> <tr><td>pagina</td> <td>Página dos anuncios na OLX (opcional, padrão: 1)</td></tr></tbody></table> <h3 id="response"><a href="#response" class="header-anchor">#</a> Response</h3> <p>Se a requisição for feita com sucesso, o formato da resposta é o seguinte:</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token constant">HTTP</span><span class="token operator">/</span><span class="token number">1.1</span> <span class="token number">200</span> <span class="token constant">OK</span>
+
+<span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">&quot;carro&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;marca&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fiat&quot;</span><span class="token punctuation">,</span>
+            <span class="token string">&quot;modelo&quot;</span><span class="token operator">:</span> <span class="token string">&quot;uno&quot;</span><span class="token punctuation">,</span>
+            <span class="token string">&quot;quilometragem&quot;</span><span class="token operator">:</span> <span class="token number">179000</span><span class="token punctuation">,</span>
+            <span class="token string">&quot;cambio&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Manual&quot;</span><span class="token punctuation">,</span>
+            <span class="token string">&quot;combustivel&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Flex&quot;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;link&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://mg.olx.com.br/bh/autos-e-pecas/carros-vans-e-utilitarios/787914461&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;titulo&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Uno mille,1.0,2006,02 portas, azul escuro&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;imagem&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://img.olx.com.br/thumbs256x256/14/148056327247396.jpg&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;preco&quot;</span><span class="token operator">:</span> <span class="token number">11500</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;data&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Hoje 19:20&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;cidade&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Belo Horizonte - MG&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre></div><p>Se o id da marca for inválido, o formato da resposta é o seguinte:</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token constant">HTTP</span><span class="token operator">/</span><span class="token number">1.1</span> <span class="token number">422</span> <span class="token constant">UNPROCESSABLE</span> <span class="token constant">ENTITY</span>
+
+<span class="token punctuation">{</span>
+    <span class="token string">&quot;erro&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Marca de carro não encontrada.&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Se o id do modelo for inválido, o formato da resposta é o seguinte:</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token constant">HTTP</span><span class="token operator">/</span><span class="token number">1.1</span> <span class="token number">422</span> <span class="token constant">UNPROCESSABLE</span> <span class="token constant">ENTITY</span>
+
+<span class="token punctuation">{</span>
+    <span class="token string">&quot;erro&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Modelo de carro não encontrado.&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/docs/modelos-carro.html" class="prev">
+        Modelos de carro
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.c11efd87.js" defer></script><script src="/docs/assets/js/2.c8213ec9.js" defer></script><script src="/docs/assets/js/6.4d99af23.js" defer></script>
+  </body>
+</html>
